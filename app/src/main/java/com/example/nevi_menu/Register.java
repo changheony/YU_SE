@@ -84,7 +84,7 @@ public class Register extends AppCompatActivity {
                             Toast.makeText(Register.this, "회원가입을 완료하였습니다.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Register.this, Login.class);  //로그인페이지로 이동
                             startActivity(intent);
-
+                            finish();//회원가입 돌아가지 않게하기
                         } else { // 회원가입 실패. 여기서도 경우별로 Toast 메시지 나누자
                             if(!lengthFlag)
                                 Toast.makeText(Register.this, "정보는 1~30자 이내로 입력해주세요.", Toast.LENGTH_SHORT).show();
