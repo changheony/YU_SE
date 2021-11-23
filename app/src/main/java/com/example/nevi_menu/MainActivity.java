@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarMain.toolbar); //binding의 appbar의 toolbar를 서포트엑터로 설정
+        setSupportActionBar(binding.appBarMain.toolbar); //binding의 appbar의 toolbar를 서포트엑터로 설정 그니까 이걸해야 .noActionbar해도 오류안남
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView; //네비게이션 메뉴바 연결
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_home, R.id.nav_food, R.id.nav_exercise,R.id.nav_group,R.id.nav_shopping,R.id.nav_my_page,R.id.nav_logout) //각 메뉴마다 메뉴바를 추가해주는 역할
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main); //위에서 toolbar설정한거에 abb_bar에 네비게이션 버튼 추가하는거
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 

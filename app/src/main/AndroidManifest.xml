@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 로그인을 가장먼저 실행, 회원가입과 메인화면들도 저장. 여기서 모든화면엔 actionbar설정 해제-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nevi_menu">
 
@@ -24,7 +25,8 @@
 
         <activity
             android:name=".Register"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Nevi_menu.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
