@@ -75,12 +75,6 @@ public class Register extends AppCompatActivity {
                             Map<String, Object> userinfo = account.toMap();  //user account 정보를 map으로 만들기
                             mDatabaseRef.child(firebaseUser.getUid()).setValue(userinfo);  //db에 정보 insert. child 적는대로 트리 생성됨
 
-                            tmpDatabaseRef = FirebaseDatabase.getInstance().getReference("EmailList");
-                            tmpDatabaseRef.child("email").setValue(strEmail);  //디비에 이메일 리스트 저장
-
-                            tmpDatabaseRef = FirebaseDatabase.getInstance().getReference("NicknameList");
-                            tmpDatabaseRef.child("nickname").setValue(strNickname);  //디비에 닉네임 리스트 저장
-
                             Toast.makeText(Register.this, "회원가입을 완료하였습니다.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Register.this, Login.class);  //로그인페이지로 이동
                             startActivity(intent);
