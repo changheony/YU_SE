@@ -47,9 +47,16 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             //로그인 성공
-                            Intent intent = new Intent(Login.this, MainActivity.class); //메인화면으로 이동
-                            startActivity(intent); //로그인 처리 완료
-                            finish(); //현재 액티비티 파괴
+                            if(strEmail.equals("root@root.com")) {
+                                Intent intent = new Intent(Login.this, AdminActivity.class); //관리자화면으로 이동
+                                startActivity(intent); //로그인 처리 완료
+                                finish(); //현재 액티비티 파괴
+                            }
+                            else{
+                                Intent intent = new Intent(Login.this, MainActivity.class); //메인화면으로 이동
+                                startActivity(intent); //로그인 처리 완료
+                                finish(); //현재 액티비티 파괴
+                            }
                         } else {
                         Toast.makeText(Login.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
