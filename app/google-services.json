@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "638875476434",
+    "firebase_url": "https://hometfriends-default-rtdb.firebaseio.com",
+    "project_id": "hometfriends",
+    "storage_bucket": "hometfriends.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638875476434:android:1974487384365e3b34e80b",
+        "android_client_info": {
+          "package_name": "com.example.hometfriends"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638875476434-aqpt3fm0hpic0ifn7i1e61nsgafkvoih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjIdL5c8Z27hyqJ9ZyuKPxkv7qXRx9Z9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638875476434-aqpt3fm0hpic0ifn7i1e61nsgafkvoih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638875476434:android:efea032cac41114a34e80b",
+        "android_client_info": {
+          "package_name": "com.example.nevi_menu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638875476434-aqpt3fm0hpic0ifn7i1e61nsgafkvoih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjIdL5c8Z27hyqJ9ZyuKPxkv7qXRx9Z9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638875476434-aqpt3fm0hpic0ifn7i1e61nsgafkvoih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

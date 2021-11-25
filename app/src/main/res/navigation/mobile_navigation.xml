@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.nevi_menu.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_food"
+        android:name="com.example.nevi_menu.ui.food.FoodFragment"
+        android:label="@string/menu_food"
+        tools:layout="@layout/fragment_food" />
+    <fragment
+        android:id="@+id/nav_exercise"
+        android:name="com.example.nevi_menu.ui.exercise.ExerciseFragment"
+        android:label="@string/menu_exercise"
+        tools:layout="@layout/fragment_exercise" />
+    <fragment
+        android:id="@+id/nav_group"
+        android:name="com.example.nevi_menu.ui.group.GroupFragment"
+        android:label="@string/menu_group"
+        tools:layout="@layout/fragment_group" />
+    <fragment
+        android:id="@+id/nav_shopping"
+        android:name="com.example.nevi_menu.ui.shopping.ShoppingFragment"
+        android:label="@string/menu_shopping"
+        tools:layout="@layout/fragment_shopping" />
+    <fragment
+        android:id="@+id/nav_my_page"
+        android:name="com.example.nevi_menu.ui.my_page.My_pageFragment"
+        android:label="@string/menu_my_page"
+        tools:layout="@layout/fragment_my_page" />
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.example.nevi_menu.ui.logout.LogoutFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/fragment_logout" />
+</navigation>
