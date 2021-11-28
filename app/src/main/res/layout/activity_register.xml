@@ -47,6 +47,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="15dp"
                     android:ems="11"
+                    android:maxLength="30"
                     android:inputType="textEmailAddress"/>
 
                 <Button
@@ -75,6 +76,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="15dp"
                 android:ems="11"
+                android:maxLength="30"
                 android:inputType="textPassword"/>
 
             <!--패스워드 확인 글자 + 입력창 -->
@@ -93,6 +95,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="15dp"
                 android:ems="11"
+                android:maxLength="30"
                 android:inputType="textPassword"/>
 
             <!--닉네임 글자 -->
@@ -117,7 +120,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="15dp"
-                    android:ems="11"/>
+                    android:ems="11"
+                    android:maxLength="30"/>
 
                 <Button
                     android:id="@+id/btn_nickname"
@@ -145,6 +149,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="15dp"
                 android:ems="11"
+                android:maxLength="3"
                 android:inputType="number"/>
 
             <!-- 현재 체중 -->
@@ -163,6 +168,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:ems="11"
+                android:maxLength="3"
                 android:inputType="number"/>
 
             <!-- 목표 체중 -->
@@ -181,6 +187,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:ems="11"
+                android:maxLength="3"
                 android:inputType="number"/>
 
             <!-- 회원가입 완료버튼 -->

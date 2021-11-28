@@ -1,5 +1,6 @@
 package com.example.nevi_menu.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +27,15 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        binding.btnCheckrecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //신체변화기록으로 이동
+                Intent intent = new Intent(getActivity(), ChangeRecord.class);
+                startActivity(intent);
+            }
+        });
         View root = binding.getRoot();
-
-
         return root;
     }
 
