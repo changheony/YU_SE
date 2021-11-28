@@ -15,16 +15,18 @@ public class UserAccount {
     private String height; //키
     private String currentWeight; //현재 체중
     private String targetWeight; //목표 체중
+    private String update; //업데이트 날짜
 
     public UserAccount() { } // Default constructor required for calls to DataSnapshot.getValue(User.class). 이거안하면 에러남
 
-    public UserAccount(String emailId, String password, String nickname, String height, String currentWeight, String targetWeight) {
+    public UserAccount(String emailId, String password, String nickname, String height, String currentWeight, String targetWeight, String update) {
         this.emailId = emailId;
         this.password = password;
         this.nickname = nickname;
         this.height = height;
         this.currentWeight = currentWeight;
         this.targetWeight = targetWeight;
+        this.update = update;
     }
 
     public Map<String, Object> toMap() { //DB에 insert 할 때 Map 사용
@@ -35,6 +37,7 @@ public class UserAccount {
         result.put("height", height);
         result.put("currentWeight", currentWeight);
         result.put("targetWeight", targetWeight);
+        result.put("update", update);
 
         return result;
     }
@@ -94,4 +97,13 @@ public class UserAccount {
     public void setTargetWeight(String targetWeight) {
         this.targetWeight = targetWeight;
     }
+
+    public String getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(String update) {
+        this.update = update;
+    }
 }
+
