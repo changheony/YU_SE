@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nevi_menu">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.nevi_menu" >
 
     <application
         android:allowBackup="true"
@@ -8,7 +9,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Nevi_menu.NoActionBar">
+        android:theme="@style/Theme.Nevi_menu.NoActionBar" >
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/mistake" />
+
         <activity
             android:name=".AdminExercise"
             android:exported="true" />
@@ -21,11 +26,10 @@
         <activity
             android:name=".AdminActivity"
             android:exported="true" />
-
         <activity
             android:name=".Login"
             android:exported="true"
-            android:theme="@style/Theme.Nevi_menu.NoActionBar">
+            android:theme="@style/Theme.Nevi_menu.NoActionBar" >
             <intent-filter> <!-- start activity is login -->
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +44,8 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Nevi_menu.NoActionBar" />
-        <activity android:name=".ui.group.GroupFragment" />
+        <activity android:name=".ui.group.GroupFragment"
+            tools:ignore="Instantiatable" />
     </application>
 
 </manifest>

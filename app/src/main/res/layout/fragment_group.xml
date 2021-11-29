@@ -16,12 +16,13 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,27 +33,89 @@
             android:layout_width="match_parent"
             android:layout_height="82dp"
             android:background="#19CDBD"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
                 android:layout_marginStart="25dp"
+                android:layout_weight="5"
                 android:text="지금 멤버를 추가해 보세요!"
-                android:textSize="21dp"/>
+                android:textColor="#000000"
+                android:textSize="21dp" />
 
             <Button
                 android:id="@+id/btn_addmem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="20dp"
+                android:layout_weight="1"
                 android:text="추가" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="0dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="닉네임"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:background="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="현재체중"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:background="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="목표체중"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="300dp"
+            android:orientation="vertical"
+           >
+
+            <ListView
+                android:id="@+id/list_member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
