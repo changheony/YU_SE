@@ -43,6 +43,7 @@ public class Register extends AppCompatActivity {
     private final ArrayList<String> emailList = new ArrayList<>(); //디비에서 이메일 저장
     private final ArrayList<String> nicknameList = new ArrayList<>(); //디비에서 닉네임 저장
     private boolean chk = false; //플래그들 검사
+    private UserAccount ua;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +66,10 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String firemessage = snapshot.getValue().toString();   //한 유저의 데이터를 문자열로 받기
-                            String segments[] = firemessage.split(",");
-
-                            int idx = segments[4].indexOf("="); //email
-                            String e = segments[4].substring(idx + 1);
-                            System.out.println(e);
-                            emailList.add(e);  //리스트에 이메일 추가
+                            ua = snapshot.getValue(UserAccount.class);
+                            String dbemail = ua.getEmailId();
+                            emailList.add(dbemail); //리스트에 이메일 추가
+                            System.out.println("dbemail: " + dbemail);
                         }
                         emailoverlapFlag = emailList.contains(strEmail); //중복되면 true
 
@@ -103,13 +101,10 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String firemessage = snapshot.getValue().toString(); //문자열로 받기
-                            String segments[] = firemessage.split(",");
-
-                            int idx1 = segments[2].indexOf("=");
-                            String nn = segments[2].substring(idx1 + 1);
-                            System.out.println(nn);
-                            nicknameList.add(nn); //리스트에 닉네임 추가
+                            ua = snapshot.getValue(UserAccount.class);
+                            String dbnickname = ua.getNickname();
+                            System.out.println("dbnickname: " + dbnickname);
+                            nicknameList.add(dbnickname); //리스트에 닉네임 추가
                         }
                         nnoverlapFlag = nicknameList.contains(strNickname); //중복되면 true
 
@@ -142,46 +137,48 @@ public class Register extends AppCompatActivity {
                 //비밀번호, 비밀번호 확인 일치 여부 체크
                 pwdCheckFlag = checkPwd();
 
-                //Firebase Auth 진행
-                mFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(lengthFlag == Boolean.TRUE && emailformFlag == Boolean.TRUE &&
-                                pwdCheckFlag==Boolean.TRUE && emailoverlapFlag==Boolean.FALSE && nnoverlapFlag == Boolean.FALSE)
-                            chk = true;
-                        //인증처리 완료되었을 때 (회원가입 성공) && 포맷 통과 && 중복 체크 통과
-                        if(chk && task.isSuccessful()) {
-                            FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();  //현재 회원가입 된 유저 가져오기
-                            SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd"); //오늘 날짜 구하기
-                            Date time = new Date();
-                            strUpdate = form.format(time);
-                            UserAccount account = new UserAccount(strEmail, strPwd, strNickname, strHeight, strCurweight, strTarweight, strUpdate); //user account 생성
+                //회원가입 조건 충족하였다면
+                if(lengthFlag == Boolean.TRUE && emailformFlag == Boolean.TRUE &&
+                        pwdCheckFlag==Boolean.TRUE && emailoverlapFlag==Boolean.FALSE && nnoverlapFlag == Boolean.FALSE) {
+                    //Firebase Auth에 계정 생성됨
+                    mFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            //회원가입 성공
+                            if(task.isSuccessful()) {
+                                FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();  //현재 회원가입 된 유저 가져오기
+                                SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd"); //오늘 날짜 구하기
+                                Date time = new Date();
+                                strUpdate = form.format(time);
+                                UserAccount account = new UserAccount(strEmail, strPwd, strNickname, strHeight, strCurweight, strTarweight, strUpdate); //user account 생성
 
-                            account.setIdToken(firebaseUser.getUid());  //토큰 가져오기
-                            Map<String, Object> userinfo = account.toMap();  //user account 정보를 map으로 만들기
-                            mDatabaseRef.child(firebaseUser.getUid()).setValue(userinfo);  //db에 정보 insert. child 적는대로 트리 생성됨
+                                account.setIdToken(firebaseUser.getUid());  //토큰 가져오기
+                                Map<String, Object> userinfo = account.toMap();  //user account 정보를 map으로 만들기
+                                mDatabaseRef.child(firebaseUser.getUid()).setValue(userinfo);  //db에 정보 insert. child 적는대로 트리 생성됨
 
-                            Toast.makeText(Register.this, "회원가입을 완료하였습니다.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Register.this, Login.class);  //로그인페이지로 이동
-                            startActivity(intent);
-                        } else { // 회원가입 실패. 각 실패원인대로 Toast 메시지 나눠짐
-                            if(!lengthFlag)
-                                Toast.makeText(Register.this, "공백이나 특수문자는 허용되지 않습니다.", Toast.LENGTH_SHORT).show();
-                            if(!emailformFlag)
-                                Toast.makeText(Register.this, "이메일 형식을 올바로 입력해주세요.", Toast.LENGTH_SHORT).show();
-                            if(emailoverlapFlag)
-                                Toast.makeText(Register.this, "이메일 중복체크를 완료해주세요.", Toast.LENGTH_SHORT).show();
-                            if(nnoverlapFlag)
-                                Toast.makeText(Register.this, "닉네임 중복체크를 완료해주세요.", Toast.LENGTH_SHORT).show();
-                            if(!pwdCheckFlag)
-                                Toast.makeText(Register.this, "비밀번호가 일치하지않습니다.", Toast.LENGTH_SHORT).show();
-                            if(strPwd.length()<6)
-                                Toast.makeText(Register.this, "비밀번호는 최소 6자 이상 입력해야합니다.", Toast.LENGTH_SHORT).show();
-                            else
-                                Toast.makeText(Register.this, "회원가입을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "회원가입을 완료하였습니다.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Register.this, Login.class);  //로그인페이지로 이동
+                                startActivity(intent);
+                            } else { // 회원가입 실패
+                                    Toast.makeText(Register.this, "회원가입을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else { //회원가입 조건 충족 못했다면
+                    if(!lengthFlag)
+                        Toast.makeText(Register.this, "공백이나 특수문자는 허용되지 않습니다.", Toast.LENGTH_SHORT).show();
+                    if(!emailformFlag)
+                        Toast.makeText(Register.this, "이메일 형식을 올바로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    if(emailoverlapFlag)
+                        Toast.makeText(Register.this, "이메일 중복체크를 완료해주세요.", Toast.LENGTH_SHORT).show();
+                    if(nnoverlapFlag)
+                        Toast.makeText(Register.this, "닉네임 중복체크를 완료해주세요.", Toast.LENGTH_SHORT).show();
+                    if(!pwdCheckFlag)
+                        Toast.makeText(Register.this, "비밀번호가 일치하지않습니다.", Toast.LENGTH_SHORT).show();
+                    if(strPwd.length()<6)
+                        Toast.makeText(Register.this, "비밀번호는 최소 6자 이상 입력해야합니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -215,7 +212,7 @@ public class Register extends AppCompatActivity {
         String[] userinfo = new String[] {strPwd, strPwdCheck, strHeight, strCurweight, strTarweight};
         String pattern = "^[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣|]*$"; //특수문자 체크
         for(int i=0; i<userinfo.length; i++) {
-            if(userinfo[i].replaceAll(" ", "").equals("")) //공백만 입력
+            if(userinfo[i].replaceAll(" ", "").equals("")) //공백 입력
                 return Boolean.FALSE;
             else if(!Pattern.matches(pattern, userinfo[i])) //공백 혹은 특수문자 입력
                 return Boolean.FALSE;
@@ -242,9 +239,9 @@ public class Register extends AppCompatActivity {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(strNickname);
         boolean result = m.matches();
-        if(strNickname.replaceAll(" ", "").equals("")) //공백만 입력
+        if(strNickname.replaceAll(" ", "").equals("")) //공백 입력
             blank = false;
-        return blank & result; //둘 중 하나라도 통과못하면 false
+        return blank & result; //공백검사, 특수문자 체크 둘 중 하나라도 통과못하면 false
     }
 
     public Boolean checkPwd() {
