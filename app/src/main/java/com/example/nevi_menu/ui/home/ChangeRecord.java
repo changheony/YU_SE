@@ -62,9 +62,9 @@ public class ChangeRecord extends AppCompatActivity {
         cal.setTime(today); //캘린더 객체에 캘린더뷰 값을 넣음
         date = Integer.toString(cal.get(Calendar.YEAR))+ "-" + Integer.toString((cal.get(Calendar.MONTH))+1) + "-" +Integer.toString(cal.get(Calendar.DATE));
 
-        //디비에서 데이터 가져오기
+        //디비에서 데이터 가져오기 (addValueEventListener? addListenerForSingleValueEvent?)
         mDBRefBody = FirebaseDatabase.getInstance().getReference("BodyRecord").child(firebaseUser.getUid()); //리얼타임디비 path설정
-        mDBRefBody.addValueEventListener(new ValueEventListener() {
+        mDBRefBody.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -72,11 +72,11 @@ public class ChangeRecord extends AppCompatActivity {
                     dbdate = snapshot.getKey();
                     bodyrecord = snapshot.getValue(BodyRecord.class);
 
-                    //디비에서 받아온 신체기록 저장
+                    //디비에서 받아온 신체기록 저장해서 리스트로 만들기
                     bodyrecord.setDate(dbdate);
                     datelist.add(bodyrecord);
                 }
-                //선택한 날짜에 존재하는 데이터를 텍스트뷰로 뿌려주기
+                //선택한 날짜에 존재하는 데이터를 찾아서 텍스트뷰로 뿌려주기
                 for(int i=0; i<datelist.size(); i++) {
                     tmprecord = datelist.get(i);
                     if(date.equals(tmprecord.getDate())) {
@@ -85,16 +85,35 @@ public class ChangeRecord extends AppCompatActivity {
                         mTvheightContent.setText(tmprecord.getHeight());
                     }
                 }
+            }
 
-                //캘린더 날짜 클릭했을 때
-                calendarview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("test", "loadPost:onCancelled", databaseError.toException()); //에러처리
+            }
+        });
+
+        //캘린더 날짜 클릭했을 때
+        calendarview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendar, int year, int month, int day) {
+                date = year+"-"+(month+1)+"-"+day; //클릭한 날짜 저장
+                mTvcwContent.setText("");
+                mTvtwContent.setText("");
+                mTvheightContent.setText("");
+
+                mDBRefBody.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onSelectedDayChange(@NonNull CalendarView calendar, int year, int month, int day) {
-                        date = year+"-"+(month+1)+"-"+day; //클릭한 날짜 저장
-                        mTvcwContent.setText("");
-                        mTvtwContent.setText("");
-                        mTvheightContent.setText("");
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            //디비에서 데이터 가져오기
+                            dbdate = snapshot.getKey();
+                            bodyrecord = snapshot.getValue(BodyRecord.class);
 
+                            //디비에서 받아온 신체기록 저장
+                            bodyrecord.setDate(dbdate);
+                            datelist.add(bodyrecord);
+                        }
                         //선택한 날짜에 존재하는 데이터를 텍스트뷰로 뿌려주기
                         for(int i=0; i<datelist.size(); i++) {
                             tmprecord = datelist.get(i);
@@ -105,12 +124,12 @@ public class ChangeRecord extends AppCompatActivity {
                             }
                         }
                     }
-                });
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("test", "loadPost:onCancelled", databaseError.toException()); //에러처리
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("test", "loadPost:onCancelled", databaseError.toException()); //에러처리
+                    }
+                });
             }
         });
 

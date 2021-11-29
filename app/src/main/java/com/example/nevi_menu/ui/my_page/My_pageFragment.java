@@ -58,7 +58,7 @@ public class My_pageFragment extends Fragment {
         mDBReference = FirebaseDatabase.getInstance().getReference("UserAccount").child(firebaseUser.getUid()); //리얼타임디비 path설정
         mDBRefBody = FirebaseDatabase.getInstance().getReference("BodyRecord").child(firebaseUser.getUid());
 
-        mDBReference.addValueEventListener(new ValueEventListener() {
+        mDBReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 useraccount = dataSnapshot.getValue(UserAccount.class);
@@ -86,7 +86,7 @@ public class My_pageFragment extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String strpwd = et.getText().toString();
                                 if(strpwd.equals(useraccount.getPassword())) {
-                                    mDBRefBody.addValueEventListener(new ValueEventListener() { //BodyRecord 디비 가져오기
+                                    mDBRefBody.addListenerForSingleValueEvent(new ValueEventListener() { //BodyRecord 디비 가져오기
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             bodyrecord = dataSnapshot.getValue(BodyRecord.class);

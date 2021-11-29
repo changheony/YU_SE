@@ -91,7 +91,7 @@ public class ChangeRecordModify extends AppCompatActivity {
                     if(heightblank) { // 키 공백
                         //디비에서 키 가져오기
                         DatabaseReference mDBReference = mDBRefUser.child(firebaseUser.getUid()); //현재 로그인한 유저의 UserAccount 디비 경로
-                        mDBReference.addValueEventListener(new ValueEventListener() {
+                        mDBReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 useraccount = dataSnapshot.getValue(UserAccount.class);
@@ -149,7 +149,7 @@ public class ChangeRecordModify extends AppCompatActivity {
 
                         //가장 최근의 기록으로 UserAccount 정보 갱신
                         DatabaseReference mDBReference = mDBRefUser.child(firebaseUser.getUid()); //현재 로그인한 유저의 UserAccount 디비 경로
-                        mDBReference.addValueEventListener(new ValueEventListener() {
+                        mDBReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 useraccount = dataSnapshot.getValue(UserAccount.class);   //디비의 데이터를 클래스로 받기

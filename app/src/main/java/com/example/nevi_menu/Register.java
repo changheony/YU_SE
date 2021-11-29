@@ -70,7 +70,7 @@ public class Register extends AppCompatActivity {
                 strEmail = mEtEmail.getText().toString();
                 //파이어베이스에서 UserAccount의 데이터 읽어오기
                 mDBReference = FirebaseDatabase.getInstance().getReference().child("UserAccount");
-                mDBReference.addValueEventListener(new ValueEventListener() {
+                mDBReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -105,7 +105,7 @@ public class Register extends AppCompatActivity {
                 strNickname = mEtNickname.getText().toString();
                 //파이어베이스에서 UserAccount의 데이터 읽어오기
                 mDBReference = FirebaseDatabase.getInstance().getReference().child("UserAccount");
-                mDBReference.addValueEventListener(new ValueEventListener() {
+                mDBReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {

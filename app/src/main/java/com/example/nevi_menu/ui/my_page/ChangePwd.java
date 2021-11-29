@@ -60,7 +60,7 @@ public class ChangePwd extends AppCompatActivity {
 
                     //디비에서 데이터 가져오기
                     mDBReference = FirebaseDatabase.getInstance().getReference("UserAccount").child(firebaseUser.getUid()); //리얼타임디비 path설정
-                    mDBReference.addValueEventListener(new ValueEventListener() {
+                    mDBReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             useraccount = dataSnapshot.getValue(UserAccount.class);
