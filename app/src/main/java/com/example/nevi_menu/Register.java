@@ -37,7 +37,7 @@ public class Register extends AppCompatActivity {
     private DatabaseReference mDatabaseRef, mDBReference;  //실시간 데이터베이스
     private EditText mEtEmail, mEtPwd, mEtPwdCheck, mEtNickname, mEtHeight, mEtCurweight, mEtTarweight;  //회원가입 입력필드
     private Button mBtnEmail, mBtnNickname;  //이메일, 닉네임 중복체크 버튼
-    private Button mBtnRegister;  //회원가입 버튼
+    private Button mBtnRegister, mBtnPrev;  //회원가입 버튼, 이전버튼
     private String strEmail, strPwd, strPwdCheck, strNickname, strHeight, strCurweight, strTarweight, strUpdate; //입력필드의 내용을 String으로 변환할 때 사용하는 변수. update는 제외
     private Boolean lengthFlag, emailoverlapFlag, nnoverlapFlag, emailformFlag, nicknameformFlag, pwdCheckFlag; //길이체크, 이메일/닉네임 중복체크, 이메일 포맷체크, 닉네임 포맷체크, 비밀번호 확인 플래그
     private final ArrayList<String> emailList = new ArrayList<>(); //디비에서 이메일 저장
@@ -54,6 +54,14 @@ public class Register extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("UserAccount"); //파이어베이스 실시간 디비 설정. path 아래에 데이터 들어가게됨
 
         connectId();  //xml의 id와 위에 선언한 EditText or Button과 연결
+
+        mBtnPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Register.this, Login.class);  //로그인페이지로 이동
+                startActivity(intent);
+            }
+        });
 
         //이메일 중복체크 버튼을 클릭했을 때 db에서 데이터 받아와서 비교
         mBtnEmail.setOnClickListener(new View.OnClickListener() {
