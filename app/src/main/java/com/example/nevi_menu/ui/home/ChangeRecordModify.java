@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,7 +41,8 @@ public class ChangeRecordModify extends AppCompatActivity {
     private boolean blankflag, heightblank=false; //공백검사, 키 공백검사
     private HashMap<String, Object> upload = new HashMap<>(); //현재체중, 목표체중, 키 저장
     private String date; //데이터를 기록할 날짜
-    private String lastdate; //
+    private String lastdate; //DB에 저장된 데이터 갱신날짜
+    private UserAccount useraccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +94,10 @@ public class ChangeRecordModify extends AppCompatActivity {
                         mDBReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                String firemessage = dataSnapshot.getValue().toString();   //디비의 데이터를 문자열로 받기
-                                String segments[] = firemessage.split(","); //각 key별로 자르기
+                                useraccount = dataSnapshot.getValue(UserAccount.class);
 
-                                int idx = segments[6].indexOf("="); //height
-                                height = segments[6].substring(idx + 1); //키의 데이터만 뽑아서 저장
-                                height = height.substring(0, height.length()-1); //마지막 문자 제거
-                                int idx2 = segments[3].indexOf("="); //update
-                                lastdate = segments[3].substring(idx2 + 1);
+                                height = useraccount.getHeight();
+                                lastdate = useraccount.getUpdate();
 
                                 upload.put("currentWeight", currentWeight);
                                 upload.put("targetWeight", targetWeight);
@@ -109,17 +108,12 @@ public class ChangeRecordModify extends AppCompatActivity {
 
                                 //가장 최근의 기록으로 UserAccount 정보 갱신
                                 boolean recent = checkRecent(); //마지막으로 유저정보가 업데이트 된 날짜 알아내기
-                                System.out.println("최근인가?" + recent);
+                                System.out.println("지금 추가하는 정보가 더 최근인가?" + recent);
                                 if(recent) {
                                     lastdate = date;
-                                    int idx3 = segments[0].indexOf("="); //password
-                                    String pwd = segments[0].substring(idx3+1);
-
-                                    int idx4 = segments[4].indexOf("="); //email
-                                    String email = segments[4].substring(idx4+1);
-
-                                    int idx5 = segments[2].indexOf("="); //nickname
-                                    String nickname = segments[2].substring(idx5+1);
+                                    String pwd = useraccount.getPassword();
+                                    String email = useraccount.getEmailId();
+                                    String nickname = useraccount.getNickname();
 
                                     //데이터베이스 위에서 받아온걸로 다 저장해두기.
                                     UserAccount ua = new UserAccount();
@@ -158,23 +152,14 @@ public class ChangeRecordModify extends AppCompatActivity {
                         mDBReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                String firemessage = dataSnapshot.getValue().toString();   //디비의 데이터를 문자열로 받기
-                                String segments[] = firemessage.split(","); //각 key별로 자르기
-
-                                int idx2 = segments[3].indexOf("="); //update
-                                lastdate = segments[3].substring(idx2 + 1);
-
+                                useraccount = dataSnapshot.getValue(UserAccount.class);   //디비의 데이터를 클래스로 받기
+                                lastdate = useraccount.getUpdate();
                                 boolean recent = checkRecent(); //마지막으로 유저정보가 업데이트 된 날짜 알아내기
                                 if(recent) { //가장 최근의 데이터를 업데이트할 경우
                                     lastdate = date;
-                                    int idx3 = segments[0].indexOf("="); //password
-                                    String pwd = segments[0].substring(idx3+1);
-
-                                    int idx4 = segments[4].indexOf("="); //email
-                                    String email = segments[4].substring(idx4+1);
-
-                                    int idx5 = segments[2].indexOf("="); //nickname
-                                    String nickname = segments[2].substring(idx5+1);
+                                    String pwd = useraccount.getPassword();
+                                    String email = useraccount.getEmailId();
+                                    String nickname = useraccount.getNickname();
 
                                     //데이터베이스 정보 갱신
                                     UserAccount ua = new UserAccount();
@@ -219,36 +204,19 @@ public class ChangeRecordModify extends AppCompatActivity {
     }
 
     public boolean checkRecent() {
-        //어떤 날짜가 더 최근인지 비교 (lastdate, date)
-        int y1,m1,d1; //lastdate. 기존날짜
-        int y2,m2,d2; //date. 이 페이지에서 정보 갱신한 날짜
-        String tmplastdate[] = lastdate.split("-");
-        String tmpdate[] = date.split("-");
-
-        y1 = Integer.parseInt(tmplastdate[0]);
-        System.out.println(y1);
-        m1 = Integer.parseInt(tmplastdate[1]);
-        System.out.println(m1);
-        d1 = Integer.parseInt(tmplastdate[2]);
-        System.out.println(d1);
-        y2 = Integer.parseInt(tmpdate[0]);
-        System.out.println(y2);
-        m2 = Integer.parseInt(tmpdate[1]);
-        System.out.println(m2);
-        d2 = Integer.parseInt(tmpdate[2]);
-        System.out.println(d2);
-
-        if(y1<=y2) //년도 비교
-            return true;
-        else if(y1>y2)
-            return false;
-        else if(m1<=m2) //월 비교
-            return true;
-        else if(m1>m2)
-            return false;
-        else if(d1<=d2) //일 비교
-            return true;
-        else
-            return false;
+        boolean result = false;
+        try{
+            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+            Date dbdate = sdformat.parse(lastdate);
+            Date localdate = sdformat.parse(date);
+            if(localdate.compareTo(dbdate) > 0) //localdate is after dbdate
+                result = true;
+            else if(localdate.compareTo(dbdate) < 0) //localdate is before dbdate
+                result = false;
+            else if(localdate.compareTo(dbdate) == 0) //localdate == dbdate
+                result = true;
+        }catch(ParseException ex) {
+        }
+        return result;
     }
 }
