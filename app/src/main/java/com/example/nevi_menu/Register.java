@@ -202,6 +202,7 @@ public class Register extends AppCompatActivity {
         mBtnEmail = findViewById(R.id.btn_email);
         mBtnNickname = findViewById(R.id.btn_nickname);
         mBtnRegister = findViewById(R.id.btn_register);
+        mBtnPrev = findViewById(R.id.btn_prev);
     }
 
     public void etToString() {
