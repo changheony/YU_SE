@@ -50,7 +50,7 @@ public class ChangeRecord extends AppCompatActivity {
         mTvTargetWeight = findViewById(R.id.tv_targetWeight);
         mTvHeight = findViewById(R.id.tv_height);
         mTvcwContent = findViewById(R.id.tv_cwContent);
-        mTvtwContent = findViewById(R.id.tv_twContent);
+        mTvtwContent = findViewById(R.id.et_curpwd);
         mTvheightContent = findViewById(R.id.tv_heightContent);
 
         mFirebaseAuth = FirebaseAuth.getInstance(); //파이어베이스 인증 얻어오기

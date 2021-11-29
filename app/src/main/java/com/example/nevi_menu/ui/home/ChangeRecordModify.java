@@ -48,7 +48,7 @@ public class ChangeRecordModify extends AppCompatActivity {
 
         mBtnSave = findViewById(R.id.btn_saveRecord);
         mEtCurrentWeight = findViewById((R.id.tv_cwContent));
-        mEtTargetWeight = findViewById((R.id.tv_twContent));
+        mEtTargetWeight = findViewById((R.id.et_curpwd));
         mEtHeight = findViewById((R.id.et_height));
         calendarview = findViewById(R.id.cv_calendar);
 

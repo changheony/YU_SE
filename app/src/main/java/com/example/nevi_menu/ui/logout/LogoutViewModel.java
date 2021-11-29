@@ -9,8 +9,8 @@ public class LogoutViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
     public LogoutViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is Logout fragment^^");
+        //mText = new MutableLiveData<>();
+        //mText.setValue("This is Logout fragment^^");
     }
 
     public LiveData<String> getText() {

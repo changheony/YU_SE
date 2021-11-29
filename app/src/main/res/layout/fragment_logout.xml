@@ -7,16 +7,33 @@
     tools:context=".ui.logout.LogoutFragment">
 
     <TextView
-        android:id="@+id/text_logout"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_textlogout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="256dp"
+        android:text="로그아웃 하시겠습니까?"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_logoutYes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="60dp"
+        android:text="Yes"
+        app:layout_constraintStart_toStartOf="@+id/tv_textlogout"
+        app:layout_constraintTop_toBottomOf="@+id/tv_textlogout" />
+
+    <Button
+        android:id="@+id/btn_logoutNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="60dp"
+        android:text="No"
+        app:layout_constraintEnd_toEndOf="@+id/tv_textlogout"
+        app:layout_constraintTop_toBottomOf="@+id/tv_textlogout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
