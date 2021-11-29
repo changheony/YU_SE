@@ -80,7 +80,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
 
         //파이어베이스에서 데이타를 읽어올 경로
         mDBEnN= FirebaseDatabase.getInstance().getReference().child("UserAccount");
-        mDBEnN.addValueEventListener(new ValueEventListener() {
+        mDBEnN.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -235,7 +235,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
     private void List_load() {
         //파이어베이스에서 데이타를 읽어올 경로
         mDBEnN= FirebaseDatabase.getInstance().getReference().child("member_list").child(firebaseUser.getUid());
-        mDBEnN.addValueEventListener(new ValueEventListener() {
+        mDBEnN.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //DataSnapshot snapshot : dataSnapshot.getChildren()
