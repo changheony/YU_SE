@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent" >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.ChangeRecord">
+
+        <TextView
+            android:id="@+id/tv_weightRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="신체변화기록"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/cv_calendar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CalendarView
+            android:id="@+id/cv_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:minDate="01/01/2021"
+            android:maxDate="12/31/2021"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_weightRecord" />
+
+        <TextView
+            android:id="@+id/tv_targetWeight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="목표 체중"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/cv_calendar"
+            app:layout_constraintStart_toStartOf="@+id/cv_calendar"
+            app:layout_constraintTop_toBottomOf="@+id/cv_calendar" />
+
+        <EditText
+            android:id="@+id/et_curpwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:maxLength="3"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="@+id/tv_targetWeight"
+            app:layout_constraintStart_toStartOf="@+id/tv_targetWeight"
+            app:layout_constraintTop_toBottomOf="@+id/tv_targetWeight" />
+
+        <TextView
+            android:id="@+id/tv_currentWeight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="현재 체중"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/et_curpwd"
+            app:layout_constraintStart_toStartOf="@+id/et_curpwd"
+            app:layout_constraintTop_toBottomOf="@+id/et_curpwd" />
+
+        <EditText
+            android:id="@+id/tv_cwContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:maxLength="3"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="@+id/tv_currentWeight"
+            app:layout_constraintStart_toStartOf="@+id/tv_currentWeight"
+            app:layout_constraintTop_toBottomOf="@+id/tv_currentWeight" />
+
+        <TextView
+            android:id="@+id/tv_height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="키"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_cwContent"
+            app:layout_constraintStart_toStartOf="@+id/tv_cwContent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cwContent" />
+
+        <EditText
+            android:id="@+id/et_height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:maxLength="3"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="@+id/tv_height"
+            app:layout_constraintStart_toStartOf="@+id/tv_height"
+            app:layout_constraintTop_toBottomOf="@+id/tv_height" />
+
+        <Button
+            android:id="@+id/btn_saveRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="저장"
+            app:layout_constraintStart_toStartOf="@+id/et_height"
+            app:layout_constraintTop_toBottomOf="@+id/et_height" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
