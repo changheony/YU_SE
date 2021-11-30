@@ -137,6 +137,7 @@ public class ChangeRecord extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChangeRecord.this, ChangeRecordModify.class);
+                intent.putExtra("chooseDate", date); //choseDate라는 이름으로 캘린더에 선택된 날짜 보내기
                 startActivity(intent);
             }
         });

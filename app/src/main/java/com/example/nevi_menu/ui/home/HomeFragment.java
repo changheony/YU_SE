@@ -78,29 +78,29 @@ public class HomeFragment extends Fragment {
                     item.add(bodyrecord);
                 }
 
-                //디비에서 받아온 신체기록 있을 때 그래프 그리기
-                if(bodyrecord != null) {
-                    setxAxis(); //x축 셋팅
-                    setweight(); //체중 그래프에 사용할 데이터 리스트 셋팅
-                    datalists.add(datalistCur); //체중리스트들을 하나의 리스트로 합치기
-                    datalists.add(datalistTar);
+                    //디비에서 받아온 신체기록 있을 때 그래프 그리기
+                    if(bodyrecord != null) {
+                        setxAxis(); //x축 셋팅
+                        setweight(); //체중 그래프에 사용할 데이터 리스트 셋팅
+                        datalists.add(datalistCur); //체중리스트들을 하나의 리스트로 합치기
+                        datalists.add(datalistTar);
 
-                    //그래프 그리기
-                    lineView.setDrawDotLine(true); //보조선
-                    lineView.setShowPopup(LineView.SHOW_POPUPS_NONE); //각 점마다 숫자 안뜨게 설정. 클릭하면 나옴
-                    lineView.setColorArray(new int[] {
-                            Color.parseColor("#000000"), Color.parseColor("#2980b9") //블랙, 파랑
-                    });
-                    lineView.setBottomTextList(xAxis); //가로축 레이블
-                    lineView.setDataList(datalists); //그래프 데이터
+                        //그래프 그리기
+                        lineView.setDrawDotLine(true); //보조선
+                        lineView.setShowPopup(LineView.SHOW_POPUPS_NONE); //각 점마다 숫자 안뜨게 설정. 클릭하면 나옴
+                        lineView.setColorArray(new int[] {
+                                Color.parseColor("#000000"), Color.parseColor("#2980b9") //블랙, 파랑
+                        });
+                        lineView.setBottomTextList(xAxis); //가로축 레이블
+                        lineView.setDataList(datalists); //그래프 데이터
+                    }
+                    //데이터 없어서 그래프 안그려짐. 범례 숨기고 텍스트 띄우기
+                    else{
+                        binding.legend1.setVisibility(View.GONE);
+                        binding.legend2.setVisibility(View.GONE);
+                        binding.nomessage.setVisibility(View.VISIBLE);
+                    }
                 }
-                //데이터 없어서 그래프 안그려짐. 범례 숨기고 텍스트 띄우기
-                else{
-                    binding.legend1.setVisibility(View.GONE);
-                    binding.legend2.setVisibility(View.GONE);
-                    binding.nomessage.setVisibility(View.VISIBLE);
-                }
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

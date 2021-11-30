@@ -61,11 +61,18 @@ public class ChangeRecordModify extends AppCompatActivity {
         mDBRefUser = FirebaseDatabase.getInstance().getReference("UserAccount"); //리얼타임디비 UserAccount 참조
         mDBRefBody = FirebaseDatabase.getInstance().getReference("BodyRecord"); //리얼타임디비 BodyRecord 참조
 
-        //캘린더 오늘 날짜 받아오기
-        Calendar cal = Calendar.getInstance(); //캘린더 객체 생성
-        Date today = new Date(calendarview.getDate()); //캘린더뷰에서 날짜값 읽어오기
-        cal.setTime(today); //캘린더 객체에 캘린더뷰 값을 넣음
-        date = Integer.toString(cal.get(Calendar.YEAR))+ "-" + Integer.toString((cal.get(Calendar.MONTH))+1) + "-" +Integer.toString(cal.get(Calendar.DATE));
+        //이전 액티비티에서 선택한 날짜 받아와서 캘린더 날짜에 표시해주기
+        Intent recv = getIntent();
+        date = recv.getStringExtra("chooseDate"); //이전 액티비티에서 넘겨준 날짜
+        Date clickdate = new Date(calendarview.getDate()); //try-catch 때문에 초기화해준거
+        long convertdate;
+        try{
+            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+            clickdate = sdformat.parse(date); //String형 date를 Date로 변환
+        }catch(ParseException ex) {
+        }
+        convertdate = clickdate.getTime(); //Date->long
+        calendarview.setDate(convertdate);
 
         //캘린더 날짜 클릭했을 때
         calendarview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -108,7 +115,6 @@ public class ChangeRecordModify extends AppCompatActivity {
 
                                 //가장 최근의 기록으로 UserAccount 정보 갱신
                                 boolean recent = checkRecent(); //마지막으로 유저정보가 업데이트 된 날짜 알아내기
-                                System.out.println("지금 추가하는 정보가 더 최근인가?" + recent);
                                 if(recent) {
                                     lastdate = date;
                                     String pwd = useraccount.getPassword();
