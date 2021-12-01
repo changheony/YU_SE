@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.nevi_menu.R;
+import com.example.nevi_menu.UserAccount;
 import com.example.nevi_menu.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +34,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private String dbdate; //디비에서 받아온 날짜 저장
-    private DatabaseReference mDBRefBody; //BodyRecord 디비 참조
+    private DatabaseReference mDBRefBody, mDBReference; //BodyRecord 디비, UserAccount 디비 참조
     private FirebaseAuth mFirebaseAuth; //디비 인증
     private FirebaseUser firebaseUser;
     private ArrayList<BodyRecord> item = new ArrayList<>(); //일자별 신체기록. 옛날 날짜가 인덱스 작음
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<ArrayList<Integer>> datalists = new ArrayList<>(); //데이터리스트들을 합치는 리스트?
     private BodyRecord bodyrecord;
     private String comment; //오늘의 한마디 접수
+    private UserAccount useraccount;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +75,35 @@ public class HomeFragment extends Fragment {
         mFirebaseAuth = FirebaseAuth.getInstance(); //파이어베이스 인증 얻어오기
         firebaseUser = mFirebaseAuth.getCurrentUser(); //현재 유저 정보 가져오기
 
-        //디비에서 데이터 가져오기
+        //디비에서 User 데이터 가져오기
+        mDBReference = FirebaseDatabase.getInstance().getReference("UserAccount").child(firebaseUser.getUid()); //리얼타임디비 path설정
+        mDBReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                useraccount = dataSnapshot.getValue(UserAccount.class);
+                //체중셋팅, bmi 계산
+                String curWeight = useraccount.getCurrentWeight();
+                String tarWeight = useraccount.getTargetWeight();
+                String height = useraccount.getHeight();
+                int intcurweight = Integer.parseInt(curWeight);
+                double doubleHeight = Double.parseDouble(height);
+                doubleHeight = doubleHeight / 100.0; // cm -> m
+                double bmi = (double)intcurweight / (doubleHeight * doubleHeight);
+                bmi = Math.round(bmi*100)/100.0; //소수점 2번째자리까지 자르기
+                String strbmi = Double.toString(bmi);
+                String display = curWeight + " / " + tarWeight + " / " + strbmi;
+
+                //데이터를 텍스트뷰로 뿌려주기
+                binding.tvWeightBMI.setText(display);
+                binding.tvHomenickname.setText(useraccount.getNickname());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("test", "loadPost:onCancelled", databaseError.toException()); //에러처리
+            }
+        });
+
+        //디비에서 Body데이터 가져오기
         mDBRefBody = FirebaseDatabase.getInstance().getReference("BodyRecord").child(firebaseUser.getUid()); //리얼타임디비 path설정
         mDBRefBody.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
