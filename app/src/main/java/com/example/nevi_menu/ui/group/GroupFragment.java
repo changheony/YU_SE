@@ -53,6 +53,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
                              ViewGroup container, Bundle savedInstanceState) {
 
         Button btn_addmem; //멤버추가 버튼변수
+        Button btsdfd; //음식 공유 버튼
+        Button btsdex; //운동 공유 버튼
         mDBRefUser = FirebaseDatabase.getInstance().getReference("member_list");
         mFirebaseAuth = FirebaseAuth.getInstance(); //파이어베이스 인증 얻어오기
         firebaseUser = mFirebaseAuth.getCurrentUser(); //현재 유저정보 가져오기
@@ -66,6 +68,11 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
         //ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.fragment_group,container,false);
         btn_addmem = (Button)root.findViewById(R.id.btn_addmem);
         btn_addmem.setOnClickListener(this);
+        btsdfd = (Button)root.findViewById(R.id.sdfoodbt);
+        btsdfd.setOnClickListener(this);
+        btsdex = (Button)root.findViewById(R.id.sdexercisebt);
+        btsdex.setOnClickListener(this);
+
 
         //리스트 설정
         list = (ListView)root.findViewById(R.id.list_member);
@@ -157,74 +164,89 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
     //fragment는 클릭 리스너가 안먹히기때문에 따로 클릭리스너 이벤트를 지정
     @Override
     public void onClick(View view) {
-        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-        ad.setIcon(R.mipmap.ic_launcher);
-        ad.setTitle("멤버 추가");
-        ad.setMessage("추가하고자 하는 멤버의 \n닉네임을 입력해 주세요");
-        String meminfo;
-        final EditText et = new EditText(getActivity());
-        ad.setView(et);
+        switch(view.getId()) {
+            case R.id.btn_addmem:
+                AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+                ad.setIcon(R.mipmap.ic_launcher);
+                ad.setTitle("멤버 추가");
+                ad.setMessage("추가하고자 하는 멤버의 \n닉네임을 입력해 주세요");
+                String meminfo;
+                final EditText et = new EditText(getActivity());
+                ad.setView(et);
 
-        ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String result = et.getText().toString();
-                //List_load();
-                //닉네임 있는지 확인인
-                if(nicknameList.contains(result)) {
-                    System.out.println(result);
-                    dialogInterface.dismiss();
-                    if(nick_list.contains(result)){
-                        new AlertDialog.Builder(getActivity())
-                                .setTitle("멤버 에러")
-                                .setMessage("이미 존재하는 멤버입니다.")
-                                .setNeutralButton("닫기", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dlg, int sumthin) {
+                ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String result = et.getText().toString();
+                        //List_load();
+                        //닉네임 있는지 확인인
+                        if (nicknameList.contains(result)) {
+                            System.out.println(result);
+                            dialogInterface.dismiss();
+                            if (nick_list.contains(result)) {
+                                new AlertDialog.Builder(getActivity())
+                                        .setTitle("멤버 에러")
+                                        .setMessage("이미 존재하는 멤버입니다.")
+                                        .setNeutralButton("닫기", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dlg, int sumthin) {
+                                            }
+                                        })
+                                        .show(); // 팝업창 보여줌
+                            } else { //문제없을 때 group list에 멤버 추가
+                                for (int j = 0; j < nicknameList.size(); j++) {
+                                    if (nicknameList.get(j).compareTo(result) == 0) { //닉네임이 포함된 순번
+                                        String CRW = currentWeight.get(j);
+                                        String TGW = targettWeight.get(j);
+
+                                        String meminfo = String.format("%-24s%-5s%-25s%-5s%-25s", result, "|", CRW, "|", TGW);
+                                        data_list.add(meminfo);
                                     }
-                                })
-                                .show(); // 팝업창 보여줌
-                    }
-                    else { //문제없을 때 group list에 멤버 추가
-                        for(int j = 0; j<nicknameList.size();j++){
-                            if(nicknameList.get(j).compareTo(result) == 0){ //닉네임이 포함된 순번
-                                String CRW = currentWeight.get(j);
-                                String TGW = targettWeight.get(j);
-
-                                String meminfo = String.format("%-24s%-5s%-25s%-5s%-25s",result,"|",CRW,"|",TGW);
-                                data_list.add(meminfo);
-                            }
-                        }
-                        adapter.notifyDataSetChanged();
-                        nick_list.add(result);
-                        System.out.print("data_list : ");
-                        System.out.println(data_list); //test용 프린터
-
-                        list_store();
-                    }
-                }
-
-                else{
-                    dialogInterface.dismiss();
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle("멤버 에러")
-                            .setMessage("존재하지 않는 멤버 닉네임입니다.")
-                            .setNeutralButton("닫기", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dlg, int sumthin) {
                                 }
-                            })
-                            .show(); // 팝업창 보여줌
-                }
+                                adapter.notifyDataSetChanged();
+                                nick_list.add(result);
+                                System.out.print("data_list : ");
+                                System.out.println(data_list); //test용 프린터
 
-            }
-        });
+                                list_store();
+                            }
+                        } else {
+                            dialogInterface.dismiss();
+                            new AlertDialog.Builder(getActivity())
+                                    .setTitle("멤버 에러")
+                                    .setMessage("존재하지 않는 멤버 닉네임입니다.")
+                                    .setNeutralButton("닫기", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dlg, int sumthin) {
+                                        }
+                                    })
+                                    .show(); // 팝업창 보여줌
+                        }
 
-        ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        ad.show();
+                    }
+                });
+
+                ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                ad.show();
+
+            case R.id.sdfoodbt:
+                AlertDialog.Builder ad2 = new AlertDialog.Builder(getActivity());
+                ad2.setIcon(R.mipmap.ic_launcher);
+                ad2.setTitle("공유 식단");
+                ad2.setMessage("추후 업데이트 예정입니다.");
+                ad2.show();
+
+            case R.id.sdexercisebt:
+                AlertDialog.Builder ad3 = new AlertDialog.Builder(getActivity());
+                ad3.setIcon(R.mipmap.ic_launcher);
+                ad3.setTitle("공유 운동표");
+                ad3.setMessage("추후 업데이트 예정입니다.");
+                ad3.show();
+        }
+
     }
 
 

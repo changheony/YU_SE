@@ -61,13 +61,9 @@ public class ShoppingFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String site = store_site.get(i);
                 System.out.println("사이트 주소 : "+site);
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(site));
-                    startActivity(intent);
-                } catch (Exception e){
-                    Toast toast = Toast.makeText(getActivity(),"Exception 감지!",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                Intent intenturi = new Intent(Intent.ACTION_VIEW, Uri.parse("https://"+site));
+                startActivity(intenturi);
+
             }
         });
 
