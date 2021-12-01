@@ -120,7 +120,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
                 ad2.setIcon(R.mipmap.ic_launcher);
                 ad2.setTitle("삭제");
                 ad2.setMessage(dnick+"님을 정말로 삭제하시겠습니까?");
-
                 ad2.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -277,7 +276,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
 
 
     private void list_store() {
-
         mDBReference = mDBRefUser.child(firebaseUser.getUid());
         mDBReference.child("memberlist").setValue(data_list);
     }
