@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminExerciseAdd">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/admin_exerciseAdd_name"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:text="운동 이름" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="URI :" />
+
+            <EditText
+                android:id="@+id/admin_exerciseAdd_uri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="설명 :" />
+
+            <EditText
+                android:id="@+id/admin_exerciseAdd_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+
+        </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/admin_exerciseAdd_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="1"
+            android:stepSize="1"
+            android:isIndicator="false"
+            android:layout_marginLeft="75dp"
+            />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="125dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="횟수 :"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                />
+
+            <EditText
+                android:id="@+id/admin_exerciseAdd_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:text=""
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            >
+            <Button
+                android:id="@+id/admin_exerciseAdd_add_btn"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="80dp"
+                android:backgroundTint="#649dcf"
+                android:text="운동 추가"
+                />
+
+            <Button
+                android:id="@+id/admin_exerciseAdd_cancel_btn"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="40dp"
+                android:backgroundTint="#649dcf"
+                android:text="취소"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

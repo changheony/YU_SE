@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/frame_exercise_etcaddscene"
+    tools:context=".ui.exercise.EtcExerciseScene"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="30dp"
+            >
+
+            <TextView
+                android:id="@+id/etcaddscene_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이름 :"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                />
+
+            <EditText
+                android:id="@+id/etcaddscene_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="30sp"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="30dp"
+            >
+
+            <TextView
+                android:id="@+id/etcaddscene_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="횟수 :"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                />
+
+            <EditText
+                android:id="@+id/etcaddscene_num_val"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:textSize="30sp"
+                android:layout_marginLeft="10dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="220dp"
+            >
+            <Button
+                android:id="@+id/etcaddscene_complete_btn"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="80dp"
+                android:backgroundTint="#649dcf"
+                android:text="설정 완료"
+                />
+
+            <Button
+                android:id="@+id/etcaddscene_cancel_btn"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="40dp"
+                android:backgroundTint="#649dcf"
+                android:text="취소"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
