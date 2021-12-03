@@ -39,7 +39,7 @@ public class Register extends AppCompatActivity {
     private Button mBtnEmail, mBtnNickname;  //이메일, 닉네임 중복체크 버튼
     private Button mBtnRegister, mBtnPrev;  //회원가입 버튼, 이전버튼
     private String strEmail, strPwd, strPwdCheck, strNickname, strHeight, strCurweight, strTarweight, strUpdate; //입력필드의 내용을 String으로 변환할 때 사용하는 변수. update는 제외
-    private Boolean lengthFlag, emailoverlapFlag, nnoverlapFlag, emailformFlag, nicknameformFlag, pwdCheckFlag; //길이체크, 이메일/닉네임 중복체크, 이메일 포맷체크, 닉네임 포맷체크, 비밀번호 확인 플래그
+    private Boolean lengthFlag=Boolean.FALSE, emailoverlapFlag=Boolean.TRUE, nnoverlapFlag=Boolean.TRUE, emailformFlag=Boolean.FALSE, nicknameformFlag, pwdCheckFlag=Boolean.FALSE; //길이체크, 이메일/닉네임 중복체크, 이메일 포맷체크, 닉네임 포맷체크, 비밀번호 확인 플래그
     private final ArrayList<String> emailList = new ArrayList<>(); //디비에서 이메일 저장
     private final ArrayList<String> nicknameList = new ArrayList<>(); //디비에서 닉네임 저장
     private boolean chk = false; //플래그들 검사
