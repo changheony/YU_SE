@@ -21,6 +21,7 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth; //파이어베이스 인증
     private DatabaseReference mDatabaseRef; //실시간 데이터베이스
     private EditText mEtEmail, mEtPwd; //로그인 입력필드
+    private String strEmail, strPwd; //로그인 입력필드의 값을 String으로 변환
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,29 +39,35 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) { //버튼 클릭했을 때
                 //로그인 요청
-                String strEmail = mEtEmail.getText().toString(); //로그인 입력필드의 값을 가져와서 문자열로 변환
-                String strPwd = mEtPwd.getText().toString();
+                strEmail = mEtEmail.getText().toString(); //로그인 입력필드의 값을 가져와서 문자열로 변환
+                strPwd = mEtPwd.getText().toString();
 
-                mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            //로그인 성공
-                            if(strEmail.equals("root@root.com")) {
-                                Intent intent = new Intent(Login.this, AdminActivity.class); //관리자화면으로 이동
-                                startActivity(intent); //로그인 처리 완료
-                                finish(); //현재 액티비티 파괴
+                boolean blankflag = checkBlank(); //공백값 검사
+
+                if(!blankflag)
+                    Toast.makeText(Login.this, "정보를 입력해주세요", Toast.LENGTH_SHORT).show();
+                else {
+                    mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()) {
+                                //로그인 성공
+                                if(strEmail.equals("root@root.com")) {
+                                    Intent intent = new Intent(Login.this, AdminActivity.class); //관리자화면으로 이동
+                                    startActivity(intent); //로그인 처리 완료
+                                    finish(); //현재 액티비티 파괴
+                                }
+                                else{
+                                    Intent intent = new Intent(Login.this, MainActivity.class); //메인화면으로 이동
+                                    startActivity(intent); //로그인 처리 완료
+                                    finish(); //현재 액티비티 파괴
+                                }
+                            } else {
+                                Toast.makeText(Login.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                             }
-                            else{
-                                Intent intent = new Intent(Login.this, MainActivity.class); //메인화면으로 이동
-                                startActivity(intent); //로그인 처리 완료
-                                finish(); //현재 액티비티 파괴
-                            }
-                        } else {
-                            Toast.makeText(Login.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 
@@ -75,6 +82,13 @@ public class Login extends AppCompatActivity {
         });
     }
 
-
+    public boolean checkBlank() {
+        //공백 입력 검사
+        if(strEmail.replaceAll(" ", "").equals(""))
+            return false;
+        else if(strPwd.replaceAll(" ", "").equals(""))
+            return false;
+        return true;
+    }
 
 }
